@@ -1,0 +1,33 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+### GET ALL Type Elements
+GET http://{{host}}/type-elements
+Accept: application/json
+
+### GET Type Element by ID
+GET http://{{host}}/type-elements/1
+Accept: application/json
+
+### POST New Type Element
+POST http://{{host}}/type-elements
+Content-Type: application/json
+Accept: application/json
+
+{
+  "typeElementName": "New Type Name"
+}
+
+### PUT Update Type Element
+PUT http://{{host}}/type-elements/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "typeElementName": "Updated Type Name"
+}
+
+### DELETE Type Element
+DELETE http://{{host}}/type-elements/3
+Accept: application/json

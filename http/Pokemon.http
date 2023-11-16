@@ -1,0 +1,41 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+### GET ALL Pokemons
+GET http://{{host}}/pokemons
+Accept: application/json
+
+### GET Pokemon by ID
+GET http://{{host}}/pokemons/001
+Accept: application/json
+
+### POST New Pokemon
+POST http://{{host}}/pokemons
+Content-Type: application/json
+Accept: application/json
+
+{
+  "pokemonId": "new_pokemon_id",
+  "pokemonName": "Pikachu",
+  "typeElement": {
+    "typeElementId": 1 
+  }
+}
+
+### PUT Update Pokemon
+PUT http://{{host}}/pokemons/007
+Content-Type: application/json
+Accept: application/json
+
+{
+  "pokemonId": "new_pokemon_id", 
+  "pokemonName": "Charizard",
+  "typeElement": {
+    "typeElementId": 2  
+  }
+}
+
+### DELETE Pokemon
+DELETE http://{{host}}/pokemons/074
+Accept: application/json
