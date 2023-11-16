@@ -1,0 +1,43 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+### GET ALL TeamPokemons
+GET http://{{host}}/team-pokemon
+Accept: application/json
+
+### GET TeamPokemon by ID
+GET http://{{host}}/team-pokemon/1
+Accept: application/json
+
+### POST New TeamPokemon
+POST http://{{host}}/team-pokemon
+Content-Type: application/json
+Accept: application/json
+
+{
+  "pokemon": {
+    "pokemonId": "001"  
+  },
+  "team": {
+    "teamId": 2 
+  }
+}
+
+### PUT Update TeamPokemon
+PUT http://{{host}}/team-pokemon/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "pokemon": {
+    "pokemonId": "004"  
+  },
+  "team": {
+    "teamId": 2  
+  }
+}
+
+### DELETE TeamPokemon
+DELETE http://{{host}}/team-pokemon/3
+Accept: application/json
