@@ -1,47 +1,59 @@
 package com.backend.pokemon.service;
 
 import com.backend.pokemon.model.Pokemon;
-import com.backend.pokemon.model.TypeElement;
 import com.backend.pokemon.repository.PokemonRepository;
-
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 public class PokemonService {
 
     private static final Logger LOG = LoggerFactory.getLogger(PokemonService.class);
+
     private final PokemonRepository pokemonRepository;
-    private final TypeElementService typeElementService;
 
     @Autowired
-    public PokemonService(PokemonRepository pokemonRepository, TypeElementService typeElementService) {
+    public PokemonService(PokemonRepository pokemonRepository) {
         this.pokemonRepository = pokemonRepository;
-        this.typeElementService = typeElementService;
     }
 
     @Transactional
-    public Pokemon savePokemonFromPokeApi(String pokemonId, String pokemonName, List<String> types, String imageUrl) {
-        // Asumimos que el primer tipo en la lista es el tipo principal del Pokémon
-        String primaryTypeName = types.isEmpty() ? "unknown" : types.get(0);
-        TypeElement primaryType = typeElementService.saveOrGetTypeElement(primaryTypeName);
-
-        // Crea y guarda el Pokémon
-        Pokemon pokemon = new Pokemon();
-        pokemon.setPokemonId(pokemonId);
-        pokemon.setPokemonName(pokemonName);
-        pokemon.setTypeElement(primaryType); // Asocia el TypeElement encontrado o creado
-        pokemon.setFotoUrl(imageUrl);
-        
+    public Pokemon savePokemon(Pokemon pokemon) {
         LOG.info("Guardando un nuevo Pokemon en la base de datos: {}", pokemon);
         return pokemonRepository.save(pokemon);
     }
 
-    // ...otros métodos del servicio...
-}
+    @Transactional(readOnly = true)
+    public List<Pokemon> findAllPokemons() {
+        LOG.info("Recuperando todos los Pokemons de la base de datos");
+        return pokemonRepository.findAll();
+    }
 
+    @Transactional(readOnly = true)
+    public Pokemon findPokemonById(String id) {
+        LOG.info("Recuperando un Pokemon de la base de datos con ID: {}", id);
+        return pokemonRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Pokemon no encontrado con ID: " + id));
+    }
+
+    @Transactional
+    public void deletePokemon(String id) {
+        LOG.info("Eliminando Pokemon con ID: {}", id);
+        pokemonRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Pokemon updatePokemon(String id, Pokemon newPokemonData) {
+        LOG.info("Actualizando Pokemon en la base de datos con ID: {}", id);
+        return pokemonRepository.findById(id)
+            .map(existingPokemon -> {
+                existingPokemon.setPokemonName(newPokemonData.getPokemonName());
+                existingPokemon.setTypeElement(newPokemonData.getTypeElement());
+                return pokemonRepository.save(existingPokemon);
+            }).orElseThrow(() -> new RuntimeException("Pokemon no encontrado con ID: " + id));
+    }
+}
