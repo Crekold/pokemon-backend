@@ -1,48 +1,31 @@
 package com.backend.pokemon.model;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "type_element")
 public class TypeElement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "type_element_id")
-    private Long typeElementId;
-    
-    @Column(name = "type_element_name")
-    private String typeElementName;
+    private Long id;
+    private String name;
 
-    // Constructores, getters y setters
-    public TypeElement() {
+    // Getters y setters
+    public Long getId() {
+        return id;
     }
 
-    public TypeElement(String typeElementName) {
-        this.typeElementName = typeElementName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getTypeElementId() {
-        return typeElementId;
+    public String getName() {
+        return name;
     }
 
-    public void setTypeElementId(Long typeElementId) {
-        this.typeElementId = typeElementId;
-    }
-
-    public String getTypeElementName() {
-        return typeElementName;
-    }
-
-    public void setTypeElementName(String typeElementName) {
-        this.typeElementName = typeElementName;
-    }
-
-    @Override
-    public String toString() {
-        return "TypeElement{" +
-                "typeElementId=" + typeElementId +
-                ", typeElementName='" + typeElementName + '\'' +
-                '}';
+    public void setName(String name) {
+        this.name = name;
     }
 }

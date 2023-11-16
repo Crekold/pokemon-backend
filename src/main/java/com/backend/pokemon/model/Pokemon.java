@@ -1,77 +1,39 @@
 package com.backend.pokemon.model;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "pokemon")
 public class Pokemon {
 
     @Id
-    @Column(name = "pokemon_id")
-    private String pokemonId;
-    
-    @Column(name = "pokemon_name")
-    private String pokemonName;
+    private String id;
+    private String name;
+    private String imageUrl;
 
-    @ManyToOne()
-    @JoinColumn(name = "type_element_type_element_id")
-    private TypeElement typeElement;
-
-    @Column(name = "foto_url")
-    private String fotoUrl;
-
-    // Constructores, getters y setters
-    public Pokemon() {
+    // Getters y setters
+    public String getId() {
+        return id;
     }
 
-    public Pokemon(String pokemonId, String pokemonName, TypeElement typeElement) {
-        this.pokemonId = pokemonId;
-        this.pokemonName = pokemonName;
-        this.typeElement = typeElement;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getPokemonId() {
-        return pokemonId;
+    public String getName() {
+        return name;
     }
 
-    public void setPokemonId(String pokemonId) {
-        this.pokemonId = pokemonId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPokemonName() {
-        return pokemonName;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setPokemonName(String pokemonName) {
-        this.pokemonName = pokemonName;
-    }
-
-    public TypeElement getTypeElement() {
-        return typeElement;
-    }
-
-    public void setTypeElement(TypeElement typeElement) {
-        this.typeElement = typeElement;
-    }
-
-    public String getFotoUrl() {
-        return fotoUrl;
-    }
-
-    public void setFotoUrl(String imageUrl) {
-        this.fotoUrl = imageUrl;
-    }
-    
-    @Override
-    public String toString() {
-        return "Pokemon{" +
-                "pokemonId='" + pokemonId + '\'' +
-                ", pokemonName='" + pokemonName + '\'' +
-                ", typeElement=" + (typeElement != null ? typeElement.getTypeElementName() : "null") +
-                '}';
-    }
-
-    public Object getType() {
-        return null;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
