@@ -17,6 +17,9 @@ public class Pokemon {
     @JoinColumn(name = "type_element_type_element_id")
     private TypeElement typeElement;
 
+    @Column(name = "foto_url")
+    private String fotoUrl;
+
     // Constructores, getters y setters
     public Pokemon() {
     }
@@ -51,6 +54,14 @@ public class Pokemon {
         this.typeElement = typeElement;
     }
 
+    public String getFotoUrl() {
+        return fotoUrl;
+    }
+
+    public void setFotoUrl(String imageUrl) {
+        this.fotoUrl = imageUrl;
+    }
+    
     @Override
     public String toString() {
         return "Pokemon{" +
@@ -58,5 +69,9 @@ public class Pokemon {
                 ", pokemonName='" + pokemonName + '\'' +
                 ", typeElement=" + (typeElement != null ? typeElement.getTypeElementName() : "null") +
                 '}';
+    }
+
+    public Object getType() {
+        return null;
     }
 }
