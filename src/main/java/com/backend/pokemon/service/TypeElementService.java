@@ -1,35 +1,36 @@
 package com.backend.pokemon.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.backend.pokemon.model.TypeElement;
 import com.backend.pokemon.repository.TypeElementRepository;
-
-import java.util.List;
-import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TypeElementService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(TypeElementService.class);
+
+    private final TypeElementRepository typeElementRepository;
+
     @Autowired
-    private TypeElementRepository typeElementRepository;
-
-    public TypeElement saveTypeElement(TypeElement typeElement) {
-        return typeElementRepository.save(typeElement);
+    public TypeElementService(TypeElementRepository typeElementRepository) {
+        this.typeElementRepository = typeElementRepository;
     }
 
-    public List<TypeElement> getAllTypeElements() {
-        return typeElementRepository.findAll();
+    @Transactional
+    public TypeElement saveOrGetTypeElement(String typeName) {
+        // Intenta encontrar el TypeElement por nombre, si no existe, crea y guarda uno nuevo
+        return typeElementRepository.findByTypeElementName(typeName)
+                .orElseGet(() -> {
+                    TypeElement newTypeElement = new TypeElement();
+                    newTypeElement.setTypeElementName(typeName);
+                    LOG.info("Guardando un nuevo TypeElement en la base de datos: {}", newTypeElement);
+                    return typeElementRepository.save(newTypeElement);
+                });
     }
 
-    public Optional<TypeElement> getTypeElementById(Long id) {
-        return typeElementRepository.findById(id);
-    }
-
-    public void deleteTypeElement(Long id) {
-        typeElementRepository.deleteById(id);
-    }
-
-    // Método para actualizar un TypeElement existente
+    // ...otros métodos del servicio...
 }

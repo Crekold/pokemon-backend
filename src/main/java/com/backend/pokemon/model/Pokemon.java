@@ -1,39 +1,77 @@
 package com.backend.pokemon.model;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "pokemon")
 public class Pokemon {
 
     @Id
-    private String id;
-    private String name;
-    private String imageUrl;
+    @Column(name = "pokemon_id")
+    private String pokemonId;
+    
+    @Column(name = "pokemon_name")
+    private String pokemonName;
 
-    // Getters y setters
-    public String getId() {
-        return id;
+    @ManyToOne()
+    @JoinColumn(name = "type_element_type_element_id")
+    private TypeElement typeElement;
+
+    @Column(name = "foto_url")
+    private String fotoUrl;
+
+    // Constructores, getters y setters
+    public Pokemon() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Pokemon(String pokemonId, String pokemonName, TypeElement typeElement) {
+        this.pokemonId = pokemonId;
+        this.pokemonName = pokemonName;
+        this.typeElement = typeElement;
     }
 
-    public String getName() {
-        return name;
+    public String getPokemonId() {
+        return pokemonId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPokemonId(String pokemonId) {
+        this.pokemonId = pokemonId;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPokemonName() {
+        return pokemonName;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPokemonName(String pokemonName) {
+        this.pokemonName = pokemonName;
+    }
+
+    public TypeElement getTypeElement() {
+        return typeElement;
+    }
+
+    public void setTypeElement(TypeElement typeElement) {
+        this.typeElement = typeElement;
+    }
+
+    public String getFotoUrl() {
+        return fotoUrl;
+    }
+
+    public void setFotoUrl(String imageUrl) {
+        this.fotoUrl = imageUrl;
+    }
+    
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "pokemonId='" + pokemonId + '\'' +
+                ", pokemonName='" + pokemonName + '\'' +
+                ", typeElement=" + (typeElement != null ? typeElement.getTypeElementName() : "null") +
+                '}';
+    }
+
+    public Object getType() {
+        return null;
     }
 }

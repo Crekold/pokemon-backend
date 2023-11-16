@@ -51,4 +51,13 @@ public class TeamPokemon {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+    @Override
+    public String toString() {
+        return "TeamPokemon{" +
+                "teamPokemonId=" + teamPokemonId +
+                ", pokemon=" + (pokemon != null ? pokemon.getPokemonId() : "null") +
+                ", team=" + (team != null ? team.getTeamId() : "null") +
+                '}';
+    }
 }
