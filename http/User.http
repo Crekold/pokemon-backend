@@ -1,0 +1,35 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+### GET ALL Users
+GET http://{{host}}/users
+Accept: application/json
+
+### GET User by ID
+GET http://{{host}}/users/user1
+Accept: application/json
+
+### POST New User
+POST http://{{host}}/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userId": "new_user_id",
+  "nickname": "new_nickname"
+}
+
+### PUT Update User
+PUT http://{{host}}/users/user2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userId": "new_user_id",
+  "nickname": "updated_nickname"
+}
+
+### DELETE User
+DELETE http://{{host}}/users/user5
+Accept: application/json
