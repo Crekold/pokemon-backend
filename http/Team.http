@@ -1,0 +1,39 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+### GET ALL Teams
+GET http://{{host}}/teams
+Accept: application/json
+
+### GET Team by ID
+GET http://{{host}}/teams/1
+Accept: application/json
+
+### POST New Team
+POST http://{{host}}/teams
+Content-Type: application/json
+Accept: application/json
+
+{
+  "teamName": "Team Rocket",
+  "user": {
+    "userId": "user1"  // Reemplaza con un ID de usuario existente
+  }
+}
+
+### PUT Update Team
+PUT http://{{host}}/teams/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "teamName": "Team Pikachu",
+  "user": {
+    "userId": "user2"  // Reemplaza con un ID de usuario existente
+  }
+}
+
+### DELETE Team
+DELETE http://{{host}}/teams/3
+Accept: application/json
