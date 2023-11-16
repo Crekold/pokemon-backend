@@ -9,22 +9,21 @@ public class Pokemon {
     @Id
     @Column(name = "pokemon_id")
     private String pokemonId;
-    
+
     @Column(name = "pokemon_name")
     private String pokemonName;
 
-    @ManyToOne()
-    @JoinColumn(name = "type_element_type_element_id")
-    private TypeElement typeElement;
+    @Column(name = "image_url")
+    private String imageUrl;
 
     // Constructores, getters y setters
     public Pokemon() {
     }
 
-    public Pokemon(String pokemonId, String pokemonName, TypeElement typeElement) {
+    public Pokemon(String pokemonId, String pokemonName, String imageUrl) {
         this.pokemonId = pokemonId;
         this.pokemonName = pokemonName;
-        this.typeElement = typeElement;
+        this.imageUrl = imageUrl;
     }
 
     public String getPokemonId() {
@@ -43,12 +42,12 @@ public class Pokemon {
         this.pokemonName = pokemonName;
     }
 
-    public TypeElement getTypeElement() {
-        return typeElement;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setTypeElement(TypeElement typeElement) {
-        this.typeElement = typeElement;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
@@ -56,7 +55,7 @@ public class Pokemon {
         return "Pokemon{" +
                 "pokemonId='" + pokemonId + '\'' +
                 ", pokemonName='" + pokemonName + '\'' +
-                ", typeElement=" + (typeElement != null ? typeElement.getTypeElementName() : "null") +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 }

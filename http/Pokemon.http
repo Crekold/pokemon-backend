@@ -18,9 +18,7 @@ Accept: application/json
 {
   "pokemonId": "new_pokemon_id",
   "pokemonName": "Pikachu",
-  "typeElement": {
-    "typeElementId": 1 
-  }
+  "imageUrl": "https://example.com/pikachu.png"
 }
 
 ### PUT Update Pokemon
@@ -31,9 +29,7 @@ Accept: application/json
 {
   "pokemonId": "new_pokemon_id", 
   "pokemonName": "Charizard",
-  "typeElement": {
-    "typeElementId": 2  
-  }
+  "imageUrl": "https://example.com/charizard.png"
 }
 
 ### DELETE Pokemon

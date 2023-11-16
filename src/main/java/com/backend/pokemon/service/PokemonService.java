@@ -52,7 +52,7 @@ public class PokemonService {
         return pokemonRepository.findById(id)
             .map(existingPokemon -> {
                 existingPokemon.setPokemonName(newPokemonData.getPokemonName());
-                existingPokemon.setTypeElement(newPokemonData.getTypeElement());
+                existingPokemon.setImageUrl(newPokemonData.getImageUrl());
                 return pokemonRepository.save(existingPokemon);
             }).orElseThrow(() -> new RuntimeException("Pokemon no encontrado con ID: " + id));
     }
