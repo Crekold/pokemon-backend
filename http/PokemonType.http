@@ -31,10 +31,10 @@ Accept: application/json
 
 {
   "pokemon": {
-    "pokemonId": "P002"  // Asegúrate de que este ID corresponda a un Pokemon existente
+    "pokemonId": "P002"  
   },
   "typeElement": {
-    "typeElementId": 2   // Asegúrate de que este ID corresponda a un TypeElement existente
+    "typeElementId": 2  
   }
 }
 
