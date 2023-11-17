@@ -30,10 +30,10 @@ public class TeamPokemonController {
         LOG.info("API Acceso: Creación de TeamPokemon.");
         try {
             TeamPokemon createdTeamPokemon = teamPokemonService.saveTeamPokemon(teamPokemon);
-            return ResponseEntity.ok(new ResponseDTO("U-0000", createdTeamPokemon, "TeamPokemon creado con éxito"));
+            return ResponseEntity.ok(new ResponseDTO("TP-0000", createdTeamPokemon, "TeamPokemon creado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al crear TeamPokemon - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0060", null, "Error al crear TeamPokemon: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("TP-0060", null, "Error al crear TeamPokemon: " + e.getMessage()));
         }
     }
 
@@ -42,10 +42,10 @@ public class TeamPokemonController {
         LOG.info("API Acceso: Obtener todos los TeamPokemons.");
         try {
             List<TeamPokemon> teamPokemons = teamPokemonService.findAllTeamPokemons();
-            return ResponseEntity.ok(new ResponseDTO("U-0000", teamPokemons, "TeamPokemons obtenidos con éxito"));
+            return ResponseEntity.ok(new ResponseDTO("TP-0000", teamPokemons, "TeamPokemons obtenidos con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener TeamPokemons - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0061", null, "Error al obtener TeamPokemons: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("TP-0061", null, "Error al obtener TeamPokemons: " + e.getMessage()));
         }
     }
 
@@ -54,10 +54,10 @@ public class TeamPokemonController {
         LOG.info("API Acceso: Obtener TeamPokemon con ID: {}", id);
         try {
             TeamPokemon teamPokemon = teamPokemonService.findTeamPokemonById(id);
-            return ResponseEntity.ok(new ResponseDTO("U-0000", teamPokemon, "TeamPokemon obtenido con éxito"));
+            return ResponseEntity.ok(new ResponseDTO("TP-0000", teamPokemon, "TeamPokemon obtenido con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener TeamPokemon - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0062", null, "Error al obtener TeamPokemon: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("TP-0062", null, "Error al obtener TeamPokemon: " + e.getMessage()));
         }
     }
 
@@ -66,10 +66,10 @@ public class TeamPokemonController {
         LOG.info("API Acceso: Eliminación de TeamPokemon con ID: {}", id);
         try {
             teamPokemonService.deleteTeamPokemon(id);
-            return ResponseEntity.ok(new ResponseDTO("U-0001", null, "TeamPokemon eliminado correctamente"));
+            return ResponseEntity.ok(new ResponseDTO("TP-0001", null, "TeamPokemon eliminado correctamente"));
         } catch (Exception e) {
             LOG.error("API Error: Error al eliminar TeamPokemon - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0063", null, "Error al eliminar TeamPokemon: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("TP-0063", null, "Error al eliminar TeamPokemon: " + e.getMessage()));
         }
     }
 
@@ -78,10 +78,10 @@ public class TeamPokemonController {
         LOG.info("API Acceso: Actualización de TeamPokemon con ID: {}", id);
         try {
             TeamPokemon updatedTeamPokemon = teamPokemonService.updateTeamPokemon(id, teamPokemon);
-            return ResponseEntity.ok(new ResponseDTO("U-0002", updatedTeamPokemon, "TeamPokemon actualizado con éxito"));
+            return ResponseEntity.ok(new ResponseDTO("TP-0002", updatedTeamPokemon, "TeamPokemon actualizado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al actualizar TeamPokemon - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0064", null, "Error al actualizar TeamPokemon: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("TP-0064", null, "Error al actualizar TeamPokemon: " + e.getMessage()));
         }
     }
 }

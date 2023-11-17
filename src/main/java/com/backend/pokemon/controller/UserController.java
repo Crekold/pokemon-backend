@@ -3,6 +3,9 @@ package com.backend.pokemon.controller;
 import com.backend.pokemon.model.User;
 import com.backend.pokemon.service.UserService;
 import com.backend.pokemon.dto.ResponseDTO;
+
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +80,18 @@ public class UserController {
         } catch (Exception e) {
             LOG.error("Acceso API: Error al actualizar usuario - " + e.getMessage(), e);
             return ResponseEntity.badRequest().body(new ResponseDTO("U-0028", null, "Error al actualizar usuario: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/createOrLogin")
+    public ResponseEntity<ResponseDTO> createOrLoginUser(@RequestBody User user) {
+        LOG.info("Acceso API: Create or Login de usuario.");
+        try {
+            Map<String, Object> result = userService.createOrLoginUser(user.getUserId(), user.getNickname());
+            String message = (String) result.get("message");
+            return ResponseEntity.ok(new ResponseDTO("U-0000", result.get("user"), message));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ResponseDTO("U-0030", null, "Error: " + e.getMessage()));
         }
     }
 }

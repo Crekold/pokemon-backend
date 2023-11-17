@@ -30,10 +30,10 @@ public class TeamController {
         LOG.info("API Acceso: Creación de Team.");
         try {
             Team createdTeam = teamService.saveTeam(team);
-            return ResponseEntity.ok(new ResponseDTO("U-0000", createdTeam, "Team creado con éxito"));
+            return ResponseEntity.ok(new ResponseDTO("T-0000", createdTeam, "Team creado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al crear Team - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0050", null, "Error al crear Team: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("T-0050", null, "Error al crear Team: " + e.getMessage()));
         }
     }
 
@@ -42,10 +42,10 @@ public class TeamController {
         LOG.info("API Acceso: Obtener todos los Teams.");
         try {
             List<Team> teams = teamService.findAllTeams();
-            return ResponseEntity.ok(new ResponseDTO("U-0000", teams, "Teams obtenidos con éxito"));
+            return ResponseEntity.ok(new ResponseDTO("T-0000", teams, "Teams obtenidos con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener Teams - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0051", null, "Error al obtener Teams: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("T-0051", null, "Error al obtener Teams: " + e.getMessage()));
         }
     }
 
@@ -54,10 +54,10 @@ public class TeamController {
         LOG.info("API Acceso: Obtener Team con ID: {}", id);
         try {
             Team team = teamService.findTeamById(id);
-            return ResponseEntity.ok(new ResponseDTO("U-0000", team, "Team obtenido con éxito"));
+            return ResponseEntity.ok(new ResponseDTO("T-0000", team, "Team obtenido con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener Team - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0052", null, "Error al obtener Team: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("T-0052", null, "Error al obtener Team: " + e.getMessage()));
         }
     }
 
@@ -66,10 +66,10 @@ public class TeamController {
         LOG.info("API Acceso: Eliminación de Team con ID: {}", id);
         try {
             teamService.deleteTeam(id);
-            return ResponseEntity.ok(new ResponseDTO("U-0001", null, "Team eliminado correctamente"));
+            return ResponseEntity.ok(new ResponseDTO("T-0001", null, "Team eliminado correctamente"));
         } catch (Exception e) {
             LOG.error("API Error: Error al eliminar Team - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0053", null, "Error al eliminar Team: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("T-0053", null, "Error al eliminar Team: " + e.getMessage()));
         }
     }
 
@@ -78,10 +78,10 @@ public class TeamController {
         LOG.info("API Acceso: Actualización de Team con ID: {}", id);
         try {
             Team updatedTeam = teamService.updateTeam(id, team);
-            return ResponseEntity.ok(new ResponseDTO("U-0002", updatedTeam, "Team actualizado con éxito"));
+            return ResponseEntity.ok(new ResponseDTO("T-0002", updatedTeam, "Team actualizado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al actualizar Team - " + e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new ResponseDTO("U-0054", null, "Error al actualizar Team: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(new ResponseDTO("T-0054", null, "Error al actualizar Team: " + e.getMessage()));
         }
     }
 }

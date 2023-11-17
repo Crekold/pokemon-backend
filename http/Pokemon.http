@@ -1,5 +1,5 @@
 @hostname = localhost
-@port = 3000
+@port = 3030
 @host = {{hostname}}:{{port}}
 
 ### GET ALL Pokemons
@@ -18,9 +18,7 @@ Accept: application/json
 {
   "pokemonId": "new_pokemon_id",
   "pokemonName": "Pikachu",
-  "typeElement": {
-    "typeElementId": 1 
-  }
+  "imageUrl": "https://example.com/pikachu.png"
 }
 
 ### PUT Update Pokemon
@@ -31,9 +29,7 @@ Accept: application/json
 {
   "pokemonId": "new_pokemon_id", 
   "pokemonName": "Charizard",
-  "typeElement": {
-    "typeElementId": 2  
-  }
+  "imageUrl": "https://example.com/charizard.png"
 }
 
 ### DELETE Pokemon

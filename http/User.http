@@ -1,5 +1,5 @@
 @hostname = localhost
-@port = 3000
+@port = 3030
 @host = {{hostname}}:{{port}}
 
 ### GET ALL Users
@@ -33,3 +33,14 @@ Accept: application/json
 ### DELETE User
 DELETE http://{{host}}/users/user5
 Accept: application/json
+
+
+### CREATE IF NOT EXISTS
+POST http://{{host}}/users/createOrLogin
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userId": "nuevo2",
+  "nickname": "nuevonick2"
+}

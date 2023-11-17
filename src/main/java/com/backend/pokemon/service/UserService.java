@@ -7,7 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -83,7 +86,22 @@ public class UserService {
         }
     }
 
-    public boolean existsById(String userId) {
-        return userRepository.existsById(userId);
+    @Transactional
+    public Map<String, Object> createOrLoginUser(String userId, String nickname) {
+        Map<String, Object> result = new HashMap<>();
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user == null) {
+            User newUser = new User(userId, nickname);
+            userRepository.save(newUser);
+            result.put("user", newUser);
+            result.put("message", "Usuario creado con éxito");
+        } else {
+            result.put("user", user);
+            result.put("message", "Inicio de sesión exitoso");
+        }
+
+        LOG.info("SERVICE - Create or Login de usuario con ID: {}", userId);
+        return result;
     }
 }
