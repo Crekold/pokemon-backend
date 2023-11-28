@@ -2,6 +2,7 @@ package com.backend.pokemon.controller;
 
 import com.backend.pokemon.model.Team;
 import com.backend.pokemon.service.TeamService;
+import com.backend.pokemon.dto.CreateTeamRequestDTO;
 import com.backend.pokemon.dto.ResponseDTO;
 
 import java.util.List;
@@ -82,6 +83,18 @@ public class TeamController {
         } catch (Exception e) {
             LOG.error("API Error: Error al actualizar Team - " + e.getMessage(), e);
             return ResponseEntity.badRequest().body(new ResponseDTO("T-0054", null, "Error al actualizar Team: " + e.getMessage()));
+        }
+    }
+    
+    @PostMapping("/create-with-pokemons")
+    public ResponseEntity<ResponseDTO> createTeamWithPokemons(@RequestBody CreateTeamRequestDTO request) {
+        LOG.info("API Acceso: Creación de Team con Pokémons.");
+        try {
+            Team team = teamService.createTeamWithPokemons(request);
+            return ResponseEntity.ok(new ResponseDTO("T-0005", team, "Equipo creado con éxito"));
+        } catch (Exception e) {
+            LOG.error("API Error: Error al crear Team con Pokémons - " + e.getMessage(), e);
+            return ResponseEntity.badRequest().body(new ResponseDTO("T-0055", null, "Error al crear Team con Pokémons: " + e.getMessage()));
         }
     }
 }

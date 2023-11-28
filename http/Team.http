@@ -18,7 +18,7 @@ Accept: application/json
 {
   "teamName": "Team Rocket",
   "user": {
-    "userId": "user1"  // Reemplaza con un ID de usuario existente
+    "userId": "user1"  
   }
 }
 
@@ -30,10 +30,22 @@ Accept: application/json
 {
   "teamName": "Team Pikachu",
   "user": {
-    "userId": "user2"  // Reemplaza con un ID de usuario existente
+    "userId": "user2" 
   }
 }
 
 ### DELETE Team
 DELETE http://{{host}}/teams/3
 Accept: application/json
+
+
+### POST New Team with Pokemons
+POST http://{{host}}/teams/create-with-pokemons
+Content-Type: application/json
+Accept: application/json
+
+{
+  "teamName": "Team LosPikachus",
+  "userId": "user1",  
+  "pokemonIds": ["1", "2", "3", "4", "5", "6"] 
+}

@@ -59,33 +59,47 @@ INSERT INTO team (team_name, user_user_id) VALUES
 ('Team Meowth', 'user5');
 
 -- Insertar datos de ejemplo en la tabla type_element
-INSERT INTO type_element (type_element_name) VALUES
-('Fire'),
-('Water'),
-('Grass'),
-('Electric'),
-('Rock');
+INSERT INTO `type_element` VALUES (1, 'grass');
+INSERT INTO `type_element` VALUES (2, 'poison');
+INSERT INTO `type_element` VALUES (3, 'fire');
+INSERT INTO `type_element` VALUES (4, 'flying');
+INSERT INTO `type_element` VALUES (5, 'water');
+INSERT INTO `type_element` VALUES (6, 'bug');
 
 -- Insertar datos de ejemplo en la tabla pokemon
-INSERT INTO pokemon (pokemon_id, pokemon_name, image_url) VALUES
-('001', 'Bulbasaur', 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png'),
-('005', 'Charmeleon', 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/005.png'),
-('025', 'Pikachu', 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png'),
-('075', 'Graveler', 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/075.png'),
-('076', 'Golem', 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/076.png');
+INSERT INTO `pokemon` VALUES ('1', 'bulbasaur', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png');
+INSERT INTO `pokemon` VALUES ('10', 'caterpie', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png');
+INSERT INTO `pokemon` VALUES ('2', 'ivysaur', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png');
+INSERT INTO `pokemon` VALUES ('3', 'venusaur', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png');
+INSERT INTO `pokemon` VALUES ('4', 'charmander', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png');
+INSERT INTO `pokemon` VALUES ('5', 'charmeleon', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png');
+INSERT INTO `pokemon` VALUES ('6', 'charizard', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png');
+INSERT INTO `pokemon` VALUES ('7', 'squirtle', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png');
+INSERT INTO `pokemon` VALUES ('8', 'wartortle', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png');
+INSERT INTO `pokemon` VALUES ('9', 'blastoise', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png');
 
 -- Insertar datos de ejemplo en la tabla pokemon_type
-INSERT INTO pokemon_type (pokemon_id, type_element_id) VALUES
-('001', 3),
-('005', 1),
-('025', 4),
-('075', 5),
-('076', 5); 
+INSERT INTO `pokemon_type` VALUES (1, '1', 1);
+INSERT INTO `pokemon_type` VALUES (2, '1', 2);
+INSERT INTO `pokemon_type` VALUES (3, '2', 1);
+INSERT INTO `pokemon_type` VALUES (4, '2', 2);
+INSERT INTO `pokemon_type` VALUES (5, '3', 1);
+INSERT INTO `pokemon_type` VALUES (6, '3', 2);
+INSERT INTO `pokemon_type` VALUES (7, '4', 3);
+INSERT INTO `pokemon_type` VALUES (8, '5', 3);
+INSERT INTO `pokemon_type` VALUES (9, '6', 3);
+INSERT INTO `pokemon_type` VALUES (10, '6', 4);
+INSERT INTO `pokemon_type` VALUES (11, '7', 5);
+INSERT INTO `pokemon_type` VALUES (12, '8', 5);
+INSERT INTO `pokemon_type` VALUES (13, '9', 5);
+INSERT INTO `pokemon_type` VALUES (14, '10', 6);
+
 
 -- Suponiendo que ya existen IDs generados para team y pokemon, insertar datos de ejemplo en la tabla team_pokemon
 INSERT INTO team_pokemon (pokemon_pokemon_id, team_team_id) VALUES
-('001', 2),
-('004', 3),
-('007', 1),
-('025', 2),
-('074', 4);
+('1', 1),
+('2', 1),
+('3', 1),
+('4', 1),
+('5', 1),
+('6', 1);

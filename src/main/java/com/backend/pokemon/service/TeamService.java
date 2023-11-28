@@ -1,7 +1,15 @@
 package com.backend.pokemon.service;
 
+import com.backend.pokemon.dto.CreateTeamRequestDTO;
+import com.backend.pokemon.model.Pokemon;
 import com.backend.pokemon.model.Team;
+import com.backend.pokemon.model.TeamPokemon;
+import com.backend.pokemon.model.User;
+import com.backend.pokemon.repository.PokemonRepository;
+import com.backend.pokemon.repository.TeamPokemonRepository;
 import com.backend.pokemon.repository.TeamRepository;
+import com.backend.pokemon.repository.UserRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +23,20 @@ public class TeamService {
     private static final Logger LOG = LoggerFactory.getLogger(TeamService.class);
 
     private final TeamRepository teamRepository;
+    private final UserRepository userRepository;
+    private final PokemonRepository pokemonRepository;
+    private final TeamPokemonRepository teamPokemonRepository;
+
 
     @Autowired
-    public TeamService(TeamRepository teamRepository) {
+    public TeamService(TeamRepository teamRepository,
+                       UserRepository userRepository,
+                       PokemonRepository pokemonRepository,
+                       TeamPokemonRepository teamPokemonRepository) {
         this.teamRepository = teamRepository;
+        this.userRepository = userRepository;
+        this.pokemonRepository = pokemonRepository;
+        this.teamPokemonRepository = teamPokemonRepository;
     }
 
     @Transactional
@@ -56,4 +74,34 @@ public class TeamService {
                 return teamRepository.save(existingTeam);
             }).orElseThrow(() -> new RuntimeException("Team no encontrado con ID: " + id));
     }
+
+    @Transactional
+    public Team createTeamWithPokemons(CreateTeamRequestDTO request) {
+        try {
+            LOG.info("Creando un nuevo equipo: {}", request.getTeamName());
+            User user = userRepository.findById(request.getUserId())
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + request.getUserId()));
+
+            Team team = new Team();
+            team.setTeamName(request.getTeamName());
+            team.setUser(user);
+            team = teamRepository.save(team);
+
+            for (String pokemonId : request.getPokemonIds()) {
+                Pokemon pokemon = pokemonRepository.findById(pokemonId)
+                        .orElseThrow(() -> new RuntimeException("Pokemon no encontrado con ID: " + pokemonId));
+                TeamPokemon teamPokemon = new TeamPokemon();
+                teamPokemon.setPokemon(pokemon);
+                teamPokemon.setTeam(team);
+                teamPokemonRepository.save(teamPokemon);
+            }
+
+            LOG.info("Equipo {} creado con éxito.", team.getTeamName());
+            return team;
+        } catch (Exception e) {
+            LOG.error("Error al crear el equipo: {}", e.getMessage(), e);
+            throw new RuntimeException("Error al crear el equipo: " + e.getMessage(), e);
+        }
+    }
+    
 }
