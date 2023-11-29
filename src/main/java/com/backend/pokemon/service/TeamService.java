@@ -75,6 +75,14 @@ public class TeamService {
             }).orElseThrow(() -> new RuntimeException("Team no encontrado con ID: " + id));
     }
 
+    @Transactional(readOnly = true)
+public Team findLastTeamByUserId(String userId) {
+    LOG.info("Recuperando el último Team creado por el usuario con ID: {}", userId);
+    return teamRepository.findTopByUserUserIdOrderByTeamIdDesc(userId)
+        .orElseThrow(() -> new RuntimeException("No se encontraron Teams para el usuario con ID: " + userId));
+}
+
+
     @Transactional
     public Team createTeamWithPokemons(CreateTeamRequestDTO request) {
         try {

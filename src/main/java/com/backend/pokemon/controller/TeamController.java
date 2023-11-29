@@ -97,4 +97,17 @@ public class TeamController {
             return ResponseEntity.badRequest().body(new ResponseDTO("T-0055", null, "Error al crear Team con Pokémons: " + e.getMessage()));
         }
     }
+    //get para obtener los teams de un id de usuario
+    @GetMapping("/last/{userId}")
+public ResponseEntity<ResponseDTO> getLastTeamByUserId(@PathVariable String userId) {
+    LOG.info("API Acceso: Obtener el último Team creado por el usuario con ID: {}", userId);
+    try {
+        Team lastTeam = teamService.findLastTeamByUserId(userId);
+        return ResponseEntity.ok(new ResponseDTO("T-0000", lastTeam, "Último Team obtenido con éxito"));
+    } catch (Exception e) {
+        LOG.error("API Error: Error al obtener el último Team - " + e.getMessage(), e);
+        return ResponseEntity.badRequest().body(new ResponseDTO("T-0056", null, "Error al obtener el último Team: " + e.getMessage()));
+    }
+}
+
 }
