@@ -39,6 +39,11 @@ public class TeamPokemonService {
         return teamPokemonRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("TeamPokemon no encontrado con ID: " + id));
     }
+    @Transactional(readOnly = true)
+    public List<TeamPokemon> findTeamPokemonsByTeamId(Long teamId) {
+        LOG.info("Recuperando TeamPokemons para el Team con ID: {}", teamId);
+        return teamPokemonRepository.findByTeamTeamId(teamId);
+    }
 
     @Transactional
     public void deleteTeamPokemon(Long id) {

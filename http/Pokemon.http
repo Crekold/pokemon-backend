@@ -7,7 +7,7 @@ GET http://{{host}}/pokemons
 Accept: application/json
 
 ### GET Pokemon by ID
-GET http://{{host}}/pokemons/001
+GET http://{{host}}/pokemons/1
 Accept: application/json
 
 ### POST New Pokemon

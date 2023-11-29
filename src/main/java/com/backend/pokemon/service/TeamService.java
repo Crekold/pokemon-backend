@@ -82,6 +82,11 @@ public Team findLastTeamByUserId(String userId) {
         .orElseThrow(() -> new RuntimeException("No se encontraron Teams para el usuario con ID: " + userId));
 }
 
+@Transactional(readOnly = true)
+public List<Team> findTeamsByUserId(String userId) {
+    LOG.info("Recuperando todos los Teams del usuario con ID: {}", userId);
+    return teamRepository.findByUserUserId(userId);
+}
 
     @Transactional
     public Team createTeamWithPokemons(CreateTeamRequestDTO request) {

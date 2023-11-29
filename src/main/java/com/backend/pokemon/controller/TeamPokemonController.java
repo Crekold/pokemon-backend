@@ -84,4 +84,16 @@ public class TeamPokemonController {
             return ResponseEntity.badRequest().body(new ResponseDTO("TP-0064", null, "Error al actualizar TeamPokemon: " + e.getMessage()));
         }
     }
+
+    @GetMapping("/team/{teamId}")
+    public ResponseEntity<ResponseDTO> getTeamPokemonsByTeamId(@PathVariable Long teamId) {
+        LOG.info("API Acceso: Obtener todos los TeamPokemons para el Team con ID: {}", teamId);
+        try {
+            List<TeamPokemon> teamPokemons = teamPokemonService.findTeamPokemonsByTeamId(teamId);
+            return ResponseEntity.ok(new ResponseDTO("TP-0000", teamPokemons, "TeamPokemons para el Team obtenidos con éxito"));
+        } catch (Exception e) {
+            LOG.error("API Error: Error al obtener TeamPokemons para el Team - " + e.getMessage(), e);
+            return ResponseEntity.badRequest().body(new ResponseDTO("TP-0065", null, "Error al obtener TeamPokemons para el Team: " + e.getMessage()));
+        }
+    }
 }

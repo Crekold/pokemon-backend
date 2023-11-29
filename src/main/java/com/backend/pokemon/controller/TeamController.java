@@ -110,4 +110,17 @@ public ResponseEntity<ResponseDTO> getLastTeamByUserId(@PathVariable String user
     }
 }
 
+
+@GetMapping("/user/{userId}")
+public ResponseEntity<ResponseDTO> getTeamsByUser(@PathVariable String userId) {
+    LOG.info("API Acceso: Obtener todos los Teams del usuario con ID: {}", userId);
+    try {
+        List<Team> teams = teamService.findTeamsByUserId(userId);
+        return ResponseEntity.ok(new ResponseDTO("T-0000", teams, "Teams obtenidos con éxito"));
+    } catch (Exception e) {
+        LOG.error("API Error: Error al obtener Teams - " + e.getMessage(), e);
+        return ResponseEntity.badRequest().body(new ResponseDTO("T-0051", null, "Error al obtener Teams: " + e.getMessage()));
+    }
+}
+
 }
