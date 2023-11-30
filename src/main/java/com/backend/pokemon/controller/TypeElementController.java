@@ -1,8 +1,8 @@
 package com.backend.pokemon.controller;
 
-import com.backend.pokemon.model.TypeElement;
 import com.backend.pokemon.service.TypeElementService;
 import com.backend.pokemon.dto.ResponseDTO;
+import com.backend.pokemon.dto.TypeElementDTO;
 
 import java.util.List;
 
@@ -26,10 +26,10 @@ public class TypeElementController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> createTypeElement(@RequestBody TypeElement typeElement) {
+    public ResponseEntity<ResponseDTO> createTypeElement(@RequestBody TypeElementDTO typeElementDTO) {
         LOG.info("API Acceso: Creación de tipo de elemento.");
         try {
-            TypeElement createdTypeElement = typeElementService.saveTypeElement(typeElement);
+            TypeElementDTO createdTypeElement = typeElementService.saveTypeElement(typeElementDTO);
             return ResponseEntity.ok(new ResponseDTO("TE-0000", createdTypeElement, "Tipo de elemento creado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al crear tipo de elemento - " + e.getMessage(), e);
@@ -41,7 +41,7 @@ public class TypeElementController {
     public ResponseEntity<ResponseDTO> getAllTypeElements() {
         LOG.info("API Acceso: Obtener todos los tipos de elementos.");
         try {
-            List<TypeElement> typeElements = typeElementService.findAllTypeElements();
+            List<TypeElementDTO> typeElements = typeElementService.findAllTypeElements();
             return ResponseEntity.ok(new ResponseDTO("TE-0000", typeElements, "Tipos de elemento obtenidos con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener tipos de elementos - " + e.getMessage(), e);
@@ -53,7 +53,7 @@ public class TypeElementController {
     public ResponseEntity<ResponseDTO> getTypeElementById(@PathVariable Long id) {
         LOG.info("API Acceso: Obtener tipo de elemento con ID: {}", id);
         try {
-            TypeElement typeElement = typeElementService.findTypeElementById(id);
+            TypeElementDTO typeElement = typeElementService.findTypeElementById(id);
             return ResponseEntity.ok(new ResponseDTO("TE-0000", typeElement, "Tipo de elemento obtenido con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener tipo de elemento - " + e.getMessage(), e);
@@ -74,10 +74,10 @@ public class TypeElementController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDTO> updateTypeElement(@PathVariable Long id, @RequestBody TypeElement typeElement) {
+    public ResponseEntity<ResponseDTO> updateTypeElement(@PathVariable Long id, @RequestBody TypeElementDTO typeElementDTO) {
         LOG.info("API Acceso: Actualización de tipo de elemento con ID: {}", id);
         try {
-            TypeElement updatedTypeElement = typeElementService.updateTypeElement(id, typeElement);
+            TypeElementDTO updatedTypeElement = typeElementService.updateTypeElement(id, typeElementDTO);
             return ResponseEntity.ok(new ResponseDTO("TE-0002", updatedTypeElement, "Tipo de elemento actualizado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al actualizar tipo de elemento - " + e.getMessage(), e);

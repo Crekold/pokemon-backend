@@ -22,7 +22,7 @@ Accept: application/json
 }
 
 ### PUT Update Pokemon
-PUT http://{{host}}/pokemons/007
+PUT http://{{host}}/pokemons/1
 Content-Type: application/json
 Accept: application/json
 
@@ -33,12 +33,12 @@ Accept: application/json
 }
 
 ### DELETE Pokemon
-DELETE http://{{host}}/pokemons/074
+DELETE http://{{host}}/pokemons/3
 Accept: application/json
 
 
 ### Guardar Pokemon de la PokeApi
-@pokemonID = -7
+@pokemonID = 6
 POST http://{{host}}/pokemons/import-pokemon/{{pokemonID}}
 Accept: application/json
 

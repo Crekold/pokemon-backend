@@ -1,8 +1,8 @@
 package com.backend.pokemon.controller;
 
-import com.backend.pokemon.model.PokemonType;
+import com.backend.pokemon.dto.PokemonTypeDTO;
 import com.backend.pokemon.service.PokemonTypeService;
-import com.backend.pokemon.dto.ResponseDTO; 
+import com.backend.pokemon.dto.ResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,13 @@ public class PokemonTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> createPokemonType(@RequestBody PokemonType pokemonType) {
+    public ResponseEntity<ResponseDTO> createPokemonType(@RequestBody PokemonTypeDTO pokemonTypeDTO) {
         LOG.info("API Acceso: Creación de PokemonType.");
         try {
-            PokemonType createdPokemonType = pokemonTypeService.savePokemonType(pokemonType);
+            PokemonTypeDTO createdPokemonType = pokemonTypeService.savePokemonType(pokemonTypeDTO);
             return ResponseEntity.ok(new ResponseDTO("PT-0000", createdPokemonType, "PokemonType creado con éxito"));
         } catch (Exception e) {
-            LOG.error("API Error: Error al crear PokemonType - " + e.getMessage(), e);
+            LOG.error("API Error: Error al crear PokemonType - {}", e.getMessage(), e);
             return ResponseEntity.badRequest().body(new ResponseDTO("PT-0060", null, "Error al crear PokemonType: " + e.getMessage()));
         }
     }
@@ -40,7 +40,7 @@ public class PokemonTypeController {
         try {
             return ResponseEntity.ok(new ResponseDTO("PT-0000", pokemonTypeService.findAllPokemonTypes(), "PokemonTypes obtenidos con éxito"));
         } catch (Exception e) {
-            LOG.error("API Error: Error al obtener PokemonTypes - " + e.getMessage(), e);
+            LOG.error("API Error: Error al obtener PokemonTypes - {}", e.getMessage(), e);
             return ResponseEntity.badRequest().body(new ResponseDTO("PT-0061", null, "Error al obtener PokemonTypes: " + e.getMessage()));
         }
     }
@@ -51,7 +51,7 @@ public class PokemonTypeController {
         try {
             return ResponseEntity.ok(new ResponseDTO("PT-0000", pokemonTypeService.findPokemonTypeById(id), "PokemonType obtenido con éxito"));
         } catch (Exception e) {
-            LOG.error("API Error: Error al obtener PokemonType - " + e.getMessage(), e);
+            LOG.error("API Error: Error al obtener PokemonType - {}", e.getMessage(), e);
             return ResponseEntity.badRequest().body(new ResponseDTO("PT-0062", null, "Error al obtener PokemonType: " + e.getMessage()));
         }
     }
@@ -63,19 +63,19 @@ public class PokemonTypeController {
             pokemonTypeService.deletePokemonType(id);
             return ResponseEntity.ok(new ResponseDTO("PT-0001", null, "PokemonType eliminado correctamente"));
         } catch (Exception e) {
-            LOG.error("API Error: Error al eliminar PokemonType - " + e.getMessage(), e);
+            LOG.error("API Error: Error al eliminar PokemonType - {}", e.getMessage(), e);
             return ResponseEntity.badRequest().body(new ResponseDTO("PT-0063", null, "Error al eliminar PokemonType: " + e.getMessage()));
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDTO> updatePokemonType(@PathVariable Long id, @RequestBody PokemonType pokemonType) {
+    public ResponseEntity<ResponseDTO> updatePokemonType(@PathVariable Long id, @RequestBody PokemonTypeDTO pokemonTypeDTO) {
         LOG.info("API Acceso: Actualización de PokemonType con ID: {}", id);
         try {
-            PokemonType updatedPokemonType = pokemonTypeService.updatePokemonType(id, pokemonType);
+            PokemonTypeDTO updatedPokemonType = pokemonTypeService.updatePokemonType(id, pokemonTypeDTO);
             return ResponseEntity.ok(new ResponseDTO("PT-0002", updatedPokemonType, "PokemonType actualizado con éxito"));
         } catch (Exception e) {
-            LOG.error("API Error: Error al actualizar PokemonType - " + e.getMessage(), e);
+            LOG.error("API Error: Error al actualizar PokemonType - {}", e.getMessage(), e);
             return ResponseEntity.badRequest().body(new ResponseDTO("PT-0064", null, "Error al actualizar PokemonType: " + e.getMessage()));
         }
     }

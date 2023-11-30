@@ -18,19 +18,19 @@ Accept: application/json
 {
   "teamName": "Team Rocket",
   "user": {
-    "userId": "user1"  
+    "userId": "user2"  
   }
 }
 
 ### PUT Update Team
-PUT http://{{host}}/teams/2
+PUT http://{{host}}/teams/10
 Content-Type: application/json
 Accept: application/json
 
 {
   "teamName": "Team Pikachu",
   "user": {
-    "userId": "user2" 
+    "userId": "user1" 
   }
 }
 

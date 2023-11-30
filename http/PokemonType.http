@@ -17,7 +17,7 @@ Accept: application/json
 
 {
   "pokemon": {
-    "pokemonId": "001"  
+    "pokemonId": "1"  
   },
   "typeElement": {
     "typeElementId": 1   
@@ -25,13 +25,13 @@ Accept: application/json
 }
 
 ### PUT Update PokemonType
-PUT http://{{host}}/pokemon-type/2
+PUT http://{{host}}/pokemon-type/15
 Content-Type: application/json
 Accept: application/json
 
 {
   "pokemon": {
-    "pokemonId": "P002"  
+    "pokemonId": "2"  
   },
   "typeElement": {
     "typeElementId": 2  

@@ -1,6 +1,6 @@
 package com.backend.pokemon.controller;
 
-import com.backend.pokemon.model.TeamPokemon;
+import com.backend.pokemon.dto.TeamPokemonDTO;
 import com.backend.pokemon.service.TeamPokemonService;
 import com.backend.pokemon.dto.ResponseDTO;
 
@@ -26,10 +26,10 @@ public class TeamPokemonController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> createTeamPokemon(@RequestBody TeamPokemon teamPokemon) {
+    public ResponseEntity<ResponseDTO> createTeamPokemon(@RequestBody TeamPokemonDTO teamPokemonDTO) {
         LOG.info("API Acceso: Creación de TeamPokemon.");
         try {
-            TeamPokemon createdTeamPokemon = teamPokemonService.saveTeamPokemon(teamPokemon);
+            TeamPokemonDTO createdTeamPokemon = teamPokemonService.saveTeamPokemon(teamPokemonDTO);
             return ResponseEntity.ok(new ResponseDTO("TP-0000", createdTeamPokemon, "TeamPokemon creado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al crear TeamPokemon - " + e.getMessage(), e);
@@ -41,7 +41,7 @@ public class TeamPokemonController {
     public ResponseEntity<ResponseDTO> getAllTeamPokemons() {
         LOG.info("API Acceso: Obtener todos los TeamPokemons.");
         try {
-            List<TeamPokemon> teamPokemons = teamPokemonService.findAllTeamPokemons();
+            List<TeamPokemonDTO> teamPokemons = teamPokemonService.findAllTeamPokemons();
             return ResponseEntity.ok(new ResponseDTO("TP-0000", teamPokemons, "TeamPokemons obtenidos con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener TeamPokemons - " + e.getMessage(), e);
@@ -53,7 +53,7 @@ public class TeamPokemonController {
     public ResponseEntity<ResponseDTO> getTeamPokemonById(@PathVariable Long id) {
         LOG.info("API Acceso: Obtener TeamPokemon con ID: {}", id);
         try {
-            TeamPokemon teamPokemon = teamPokemonService.findTeamPokemonById(id);
+            TeamPokemonDTO teamPokemon = teamPokemonService.findTeamPokemonById(id);
             return ResponseEntity.ok(new ResponseDTO("TP-0000", teamPokemon, "TeamPokemon obtenido con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener TeamPokemon - " + e.getMessage(), e);
@@ -74,10 +74,10 @@ public class TeamPokemonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDTO> updateTeamPokemon(@PathVariable Long id, @RequestBody TeamPokemon teamPokemon) {
+    public ResponseEntity<ResponseDTO> updateTeamPokemon(@PathVariable Long id, @RequestBody TeamPokemonDTO teamPokemonDTO) {
         LOG.info("API Acceso: Actualización de TeamPokemon con ID: {}", id);
         try {
-            TeamPokemon updatedTeamPokemon = teamPokemonService.updateTeamPokemon(id, teamPokemon);
+            TeamPokemonDTO updatedTeamPokemon = teamPokemonService.updateTeamPokemon(id, teamPokemonDTO);
             return ResponseEntity.ok(new ResponseDTO("TP-0002", updatedTeamPokemon, "TeamPokemon actualizado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al actualizar TeamPokemon - " + e.getMessage(), e);
@@ -89,7 +89,7 @@ public class TeamPokemonController {
     public ResponseEntity<ResponseDTO> getTeamPokemonsByTeamId(@PathVariable Long teamId) {
         LOG.info("API Acceso: Obtener todos los TeamPokemons para el Team con ID: {}", teamId);
         try {
-            List<TeamPokemon> teamPokemons = teamPokemonService.findTeamPokemonsByTeamId(teamId);
+            List<TeamPokemonDTO> teamPokemons = teamPokemonService.findTeamPokemonsByTeamId(teamId);
             return ResponseEntity.ok(new ResponseDTO("TP-0000", teamPokemons, "TeamPokemons para el Team obtenidos con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener TeamPokemons para el Team - " + e.getMessage(), e);

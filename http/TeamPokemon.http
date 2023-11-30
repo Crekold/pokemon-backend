@@ -25,19 +25,26 @@ Accept: application/json
 }
 
 ### PUT Update TeamPokemon
-PUT http://{{host}}/team-pokemon/2
+PUT http://{{host}}/team-pokemon/5
 Content-Type: application/json
 Accept: application/json
 
 {
   "pokemon": {
-    "pokemonId": "004"  
+    "pokemonId": "1"  
   },
   "team": {
-    "teamId": 2  
+    "teamId": 11 
   }
 }
 
 ### DELETE TeamPokemon
 DELETE http://{{host}}/team-pokemon/3
+Accept: application/json
+
+
+
+### GET TeamPokemonBy TeamID
+@teamId = 1
+GET http://{{host}}/team-pokemon/team/{{teamId}}
 Accept: application/json

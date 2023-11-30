@@ -1,8 +1,9 @@
 package com.backend.pokemon.controller;
 
+import com.backend.pokemon.dto.ResponseDTO;
+import com.backend.pokemon.dto.UserDTO;
 import com.backend.pokemon.model.User;
 import com.backend.pokemon.service.UserService;
-import com.backend.pokemon.dto.ResponseDTO;
 
 import java.util.Map;
 
@@ -26,10 +27,10 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> saveUser(@RequestBody User user) {
+    public ResponseEntity<ResponseDTO> saveUser(@RequestBody UserDTO userDTO) {
         LOG.info("Acceso API: Creación de usuario.");
         try {
-            User savedUser = userService.saveUser(user);
+            User savedUser = userService.saveUser(userDTO);
             return ResponseEntity.ok(new ResponseDTO("U-0000", savedUser, "Usuario creado con éxito"));
         } catch (Exception e) {
             LOG.error("Acceso API: Error al crear usuario - " + e.getMessage(), e);
@@ -72,10 +73,10 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<ResponseDTO> updateUser(@PathVariable("userId") String userId, @RequestBody User user) {
+    public ResponseEntity<ResponseDTO> updateUser(@PathVariable("userId") String userId, @RequestBody UserDTO userDTO) {
         LOG.info("Acceso API: Actualización de usuario con ID: {}", userId);
         try {
-            User updatedUser = userService.updateUser(userId, user);
+            UserDTO updatedUser = userService.updateUser(userId, userDTO);
             return ResponseEntity.ok(new ResponseDTO("U-0002", updatedUser, "Usuario actualizado con éxito"));
         } catch (Exception e) {
             LOG.error("Acceso API: Error al actualizar usuario - " + e.getMessage(), e);
@@ -84,10 +85,10 @@ public class UserController {
     }
 
     @PostMapping("/createOrLogin")
-    public ResponseEntity<ResponseDTO> createOrLoginUser(@RequestBody User user) {
+    public ResponseEntity<ResponseDTO> createOrLoginUser(@RequestBody UserDTO userDTO) {
         LOG.info("Acceso API: Create or Login de usuario.");
         try {
-            Map<String, Object> result = userService.createOrLoginUser(user.getUserId(), user.getNickname());
+            Map<String, Object> result = userService.createOrLoginUser(userDTO.getUserId(), userDTO.getNickname());
             String message = (String) result.get("message");
             return ResponseEntity.ok(new ResponseDTO("U-0000", result.get("user"), message));
         } catch (Exception e) {

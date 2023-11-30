@@ -4,6 +4,7 @@ import com.backend.pokemon.model.Team;
 import com.backend.pokemon.service.TeamService;
 import com.backend.pokemon.dto.CreateTeamRequestDTO;
 import com.backend.pokemon.dto.ResponseDTO;
+import com.backend.pokemon.dto.TeamDTO;
 
 import java.util.List;
 
@@ -27,10 +28,10 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> createTeam(@RequestBody Team team) {
+    public ResponseEntity<ResponseDTO> createTeam(@RequestBody TeamDTO teamDTO) {
         LOG.info("API Acceso: Creación de Team.");
         try {
-            Team createdTeam = teamService.saveTeam(team);
+            TeamDTO createdTeam = teamService.saveTeam(teamDTO);
             return ResponseEntity.ok(new ResponseDTO("T-0000", createdTeam, "Team creado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al crear Team - " + e.getMessage(), e);
@@ -42,7 +43,7 @@ public class TeamController {
     public ResponseEntity<ResponseDTO> getAllTeams() {
         LOG.info("API Acceso: Obtener todos los Teams.");
         try {
-            List<Team> teams = teamService.findAllTeams();
+            List<TeamDTO> teams = teamService.findAllTeams();
             return ResponseEntity.ok(new ResponseDTO("T-0000", teams, "Teams obtenidos con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener Teams - " + e.getMessage(), e);
@@ -54,7 +55,7 @@ public class TeamController {
     public ResponseEntity<ResponseDTO> getTeamById(@PathVariable Long id) {
         LOG.info("API Acceso: Obtener Team con ID: {}", id);
         try {
-            Team team = teamService.findTeamById(id);
+            TeamDTO team = teamService.findTeamById(id);
             return ResponseEntity.ok(new ResponseDTO("T-0000", team, "Team obtenido con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al obtener Team - " + e.getMessage(), e);
@@ -75,10 +76,10 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDTO> updateTeam(@PathVariable Long id, @RequestBody Team team) {
+    public ResponseEntity<ResponseDTO> updateTeam(@PathVariable Long id, @RequestBody TeamDTO teamDTO) {
         LOG.info("API Acceso: Actualización de Team con ID: {}", id);
         try {
-            Team updatedTeam = teamService.updateTeam(id, team);
+            TeamDTO updatedTeam = teamService.updateTeam(id, teamDTO);
             return ResponseEntity.ok(new ResponseDTO("T-0002", updatedTeam, "Team actualizado con éxito"));
         } catch (Exception e) {
             LOG.error("API Error: Error al actualizar Team - " + e.getMessage(), e);
