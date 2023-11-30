@@ -1,0 +1,48 @@
+### GET ALL PokemonStats
+GET http://localhost:3030/pokemon-stats
+Accept: application/json
+
+### GET PokemonStats by ID
+GET http://localhost:3030/pokemon-stats/1
+Accept: application/json
+
+### POST New PokemonStats
+POST http://localhost:3030/pokemon-stats
+Content-Type: application/json
+Accept: application/json
+
+{
+  "hp": 80,
+  "attack": 100,
+  "defense": 70,
+  "specialAttack": 120,
+  "specialDefense": 90,
+  "pokemon": {
+    "pokemonId": "1"
+  }
+}
+
+### PUT Update PokemonStats
+PUT http://localhost:3030/pokemon-stats/5
+Content-Type: application/json
+Accept: application/json
+
+{
+  "hp": 85,
+  "attack": 110,
+  "defense": 75,
+  "specialAttack": 130,
+  "specialDefense": 95,
+  "pokemon": {
+    "pokemonId": "1"
+  }
+}
+
+### DELETE PokemonStats
+DELETE http://localhost:3030/pokemon-stats/3
+Accept: application/json
+
+### GET PokemonStats By PokemonID
+@pokemonId = 1
+GET http://localhost:3030/pokemon-stats/pokemon/{{pokemonId}}
+Accept: application/json

@@ -28,6 +28,17 @@ CREATE TABLE pokemon (
   image_url varchar(255)
 );
 
+-- Tabla de estadisticas
+CREATE TABLE pokemon_stats (
+  id_stats serial PRIMARY KEY,
+  hp int NOT NULL,
+  attack int NOT NULL,
+  defense int NOT NULL,
+  special_attack int NOT NULL,
+  special_defense int NOT NULL,
+  pokemon_pokemon_id varchar(50) REFERENCES pokemon(pokemon_id)
+);
+
 -- Creación de tabla pokemon_type
 CREATE TABLE pokemon_type (
   pokemon_type_id serial PRIMARY KEY,
@@ -77,6 +88,19 @@ INSERT INTO `pokemon` VALUES ('6', 'charizard', 'https://raw.githubusercontent.c
 INSERT INTO `pokemon` VALUES ('7', 'squirtle', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png');
 INSERT INTO `pokemon` VALUES ('8', 'wartortle', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png');
 INSERT INTO `pokemon` VALUES ('9', 'blastoise', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png');
+
+-- Insertar datos de ejemplo en la tabla pokemon_stats
+INSERT INTO `pokemon_stats` (`id_stats`, `hp`, `attack`, `defense`, `special_attack`, `special_defense`, `pokemon_pokemon_id`) VALUES
+(1, 45, 49, 49, 65, 65, '1'),
+(2, 50, 20, 55, 25, 25, '10'),
+(3, 60, 62, 63, 80, 80, '2'),
+(4, 80, 82, 83, 100, 100, '3'),
+(5, 39, 52, 43, 60, 50, '4'),
+(6, 58, 64, 58, 80, 65, '5'),
+(7, 78, 84, 78, 109, 85, '6'),
+(8, 44, 48, 65, 50, 64, '7'),
+(9, 59, 63, 80, 65, 80, '8'),
+(10, 79, 83, 100, 85, 105, '9');
 
 -- Insertar datos de ejemplo en la tabla pokemon_type
 INSERT INTO `pokemon_type` VALUES (1, '1', 1);
