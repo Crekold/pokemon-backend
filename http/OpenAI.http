@@ -1,14 +1,14 @@
-### OpenAI Completions POST Request
-POST http://localhost:3030/api/openai/completions
+@openai_key = apikey
+@openai_endpoint = https://api.openai.com/v1/engines/davinci/completions
+
+### Request to OpenAI API for a team suggestion
+POST {{openai_endpoint}}
+Authorization: Bearer {{openai_key}}
 Content-Type: application/json
 
 {
-  "prompt": "Once upon a time",
-  "maxTokens": 150,
-  "temperature": 0.7,
-  "topP": 1,
-  "frequencyPenalty": 0,
-  "presencePenalty": 0,
-  "n": 1,
-  "engine": "text-davinci-002"
+  "model": "text-davinci-003",
+  "prompt": "Given a team of Pokémon with IDs 1, 2, 3, 4, 5, 6 and their corresponding names bulbasaur, ivysaur, venusaur, charmander, charmeleon, charizard, suggest a new team of 6 Pokémon from the original 151 for a user named 'AshK' to improve their chances in battles. The suggestion should include Pokémon IDs, names, and a brief explanation for each choice.",
+  "temperature": 0.5,
+  "max_tokens": 150
 }
