@@ -49,6 +49,6 @@ Accept: application/json
 
 
 ### GET TeamStats by TeamID
-@teamId = 2
+@teamId = 8
 GET http://{{host}}/team-stats/team/{{teamId}}
 Accept: application/json

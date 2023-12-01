@@ -71,6 +71,52 @@ CREATE TABLE team_suggestion (
   team_team_id integer REFERENCES team(team_id) 
 );
 
+-- Crear tabla histórica para team
+CREATE TABLE team_history (
+    team_id INT AUTO_INCREMENT PRIMARY KEY,
+    team_name VARCHAR(50),
+    user_user_id VARCHAR(50),
+    valid_from TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear tabla histórica para team_pokemon
+CREATE TABLE team_pokemon_history (
+    team_pokemon_id INT AUTO_INCREMENT PRIMARY KEY,
+    pokemon_pokemon_id VARCHAR(50),
+    team_team_id INT,
+    valid_from TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Eliminar trigger existente para team_history
+DROP TRIGGER IF EXISTS team_history_trigger;
+
+-- Crear trigger para team_history
+DELIMITER //
+CREATE TRIGGER team_history_trigger
+AFTER INSERT ON team
+FOR EACH ROW
+BEGIN
+    INSERT INTO team_history (team_name, user_user_id, valid_from)
+    VALUES (NEW.team_name, NEW.user_user_id, CURRENT_TIMESTAMP);
+END;
+//
+DELIMITER ;
+
+-- Eliminar trigger existente para team_pokemon_history
+DROP TRIGGER IF EXISTS team_pokemon_history_trigger;
+
+-- Crear trigger para team_pokemon_history
+DELIMITER //
+CREATE TRIGGER team_pokemon_history_trigger
+AFTER INSERT ON team_pokemon
+FOR EACH ROW
+BEGIN
+    INSERT INTO team_pokemon_history (pokemon_pokemon_id, team_team_id, valid_from)
+    VALUES (NEW.pokemon_pokemon_id, NEW.team_team_id, CURRENT_TIMESTAMP);
+END;
+//
+DELIMITER ;
+
 -- Insertar datos de ejemplo en la tabla user
 INSERT INTO user (user_id, nickname) VALUES
 ('user1', 'AshK'),
@@ -135,7 +181,6 @@ INSERT INTO `pokemon_type` VALUES (11, '7', 5);
 INSERT INTO `pokemon_type` VALUES (12, '8', 5);
 INSERT INTO `pokemon_type` VALUES (13, '9', 5);
 INSERT INTO `pokemon_type` VALUES (14, '10', 6);
-
 
 -- Suponiendo que ya existen IDs generados para team y pokemon, insertar datos de ejemplo en la tabla team_pokemon
 INSERT INTO team_pokemon (pokemon_pokemon_id, team_team_id) VALUES

@@ -5,6 +5,8 @@ import com.backend.pokemon.openai.dto.OpenAIResponseDTO;
 import com.backend.pokemon.openai.service.OpenAIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,27 +14,23 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/openai")
 public class OpenAIController {
 
-    private static final Logger log = LoggerFactory.getLogger(OpenAIController.class);
-
     private final OpenAIService openAIService;
+    private static final Logger LOG = LoggerFactory.getLogger(OpenAIController.class);
 
+    @Autowired
     public OpenAIController(OpenAIService openAIService) {
         this.openAIService = openAIService;
     }
 
-    @PostMapping("/completions")
-    public ResponseEntity<?> createCompletion(@RequestBody OpenAIRequestDTO requestDTO) {
+    @PostMapping("/suggestions")
+    public ResponseEntity<OpenAIResponseDTO> getSuggestion(@RequestBody OpenAIRequestDTO requestDTO) {
         try {
-            OpenAIResponseDTO responseDTO = openAIService.callOpenAI(requestDTO);
-            if (responseDTO != null) {
-                return ResponseEntity.ok(responseDTO);
-            } else {
-                log.error("La respuesta de la API de OpenAI fue nula");
-                return ResponseEntity.badRequest().body("La solicitud no pudo ser procesada por la API de OpenAI.");
-            }
+            LOG.info("Creating suggestion with OpenAI");
+            OpenAIResponseDTO suggestion = openAIService.createOpenAISuggestion(requestDTO);
+            return ResponseEntity.ok(suggestion);
         } catch (Exception e) {
-            log.error("Excepción al procesar la solicitud: {}", e.getMessage());
-            return ResponseEntity.internalServerError().body("Error interno del servidor: " + e.getMessage());
+            LOG.error("Error creating suggestion with OpenAI", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }

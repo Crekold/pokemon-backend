@@ -52,7 +52,7 @@ Accept: application/json
 
 
 ### PUT Update Team with Pokemons
-@teamID = 10
+@teamID = 6
 PUT http://{{host}}/teams/{{teamID}}/update-with-pokemons
 Content-Type: application/json
 Accept: application/json
