@@ -49,3 +49,22 @@ Accept: application/json
   "userId": "user1",  
   "pokemonIds": ["1", "2", "3", "4", "5", "6"] 
 }
+
+
+### PUT Update Team with Pokemons
+@teamID = 10
+PUT http://{{host}}/teams/{{teamID}}/update-with-pokemons
+Content-Type: application/json
+Accept: application/json
+
+{
+  "teamName": "Team LosDoraemons",
+  "userId": "user1",  
+  "pokemonIds": ["22", "23", "24", "25", "26", "27"] 
+}
+
+
+### GET Team By User
+@userID = user1
+GET http://{{host}}/teams/user/{{userID}}
+Accept: application/json

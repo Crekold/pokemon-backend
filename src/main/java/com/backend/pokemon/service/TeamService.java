@@ -167,6 +167,42 @@ public class TeamService {
         }
     }
 
+    // Método para actualizar un equipo con nuevos Pokémon
+    @Transactional
+    public TeamDTO updateTeamWithPokemons(CreateTeamRequestDTO request) {
+        LOG.info("Actualizando equipo con ID: {} y nombre: {}", request.getTeamId(), request.getTeamName());
+        try {
+            Team team = teamRepository.findById(request.getTeamId())
+                    .orElseThrow(() -> new RuntimeException("Equipo no encontrado con ID: " + request.getTeamId()));
+
+            // Opcional: Actualiza el nombre del equipo si se proporciona uno nuevo
+            if (request.getTeamName() != null && !request.getTeamName().isEmpty()) {
+                team.setTeamName(request.getTeamName());
+            }
+
+            // Borra los antiguos TeamPokemon asociados con este equipo
+            teamPokemonRepository.deleteByTeamTeamId(team.getTeamId());
+
+            // Crea y guarda las nuevas asociaciones TeamPokemon
+            for (String pokemonId : request.getPokemonIds()) {
+                Pokemon pokemon = pokemonRepository.findById(pokemonId)
+                        .orElseThrow(() -> new RuntimeException("Pokemon no encontrado con ID: " + pokemonId));
+                TeamPokemon teamPokemon = new TeamPokemon();
+                teamPokemon.setPokemon(pokemon);
+                teamPokemon.setTeam(team);
+                teamPokemonRepository.save(teamPokemon);
+            }
+
+            // Guarda los cambios en el equipo
+            teamRepository.save(team);
+            LOG.info("Equipo actualizado con éxito con nombre: {}", team.getTeamName());
+            return convertEntityToDTO(team);
+        } catch (Exception e) {
+            LOG.error("Error al actualizar el equipo con ID: {}: {}", request.getTeamId(), e.getMessage(), e);
+            throw new RuntimeException("Error al actualizar el equipo con ID: " + request.getTeamId() + ": " + e.getMessage(), e);
+        }
+    }
+
 
     private TeamDTO convertEntityToDTO(Team team) {
         TeamDTO teamDTO = new TeamDTO();

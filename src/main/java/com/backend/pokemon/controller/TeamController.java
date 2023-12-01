@@ -98,6 +98,20 @@ public class TeamController {
             return ResponseEntity.badRequest().body(new ResponseDTO("T-0055", null, "Error al crear Team con Pokémons: " + e.getMessage()));
         }
     }
+
+    @PutMapping("/{id}/update-with-pokemons")
+    public ResponseEntity<ResponseDTO> updateTeamWithPokemons(@PathVariable Long id, @RequestBody CreateTeamRequestDTO request) {
+        LOG.info("API Acceso: Actualización de Team con Pokémons para el ID: {}", id);
+        try {
+            request.setTeamId(id); // Asegúrate de que el DTO tiene un setter para teamId
+            TeamDTO updatedTeam = teamService.updateTeamWithPokemons(request);
+            return ResponseEntity.ok(new ResponseDTO("T-0006", updatedTeam, "Equipo actualizado con éxito con nuevos Pokémon"));
+        } catch (Exception e) {
+            LOG.error("API Error: Error al actualizar Team con Pokémons - " + e.getMessage(), e);
+            return ResponseEntity.badRequest().body(new ResponseDTO("T-0057", null, "Error al actualizar Team con Pokémons: " + e.getMessage()));
+        }
+    }
+
     //get para obtener los teams de un id de usuario
     @GetMapping("/last/{userId}")
 public ResponseEntity<ResponseDTO> getLastTeamByUserId(@PathVariable String userId) {
