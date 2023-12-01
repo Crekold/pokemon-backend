@@ -38,13 +38,13 @@ Accept: application/json
 
 
 ### Guardar Pokemon de la PokeApi
-@pokemonID = 6
+@pokemonID = 12
 POST http://{{host}}/pokemons/import-pokemon/{{pokemonID}}
 Accept: application/json
 
 
 ### Importar Rango de Pokemons de la PokeApi
 @startId = 1
-@endId = 10
+@endId = 151
 GET http://{{host}}/pokemons/import-range?startId={{startId}}&endId={{endId}}
 Accept: application/json

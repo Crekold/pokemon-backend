@@ -43,6 +43,6 @@ DELETE http://localhost:3030/pokemon-stats/3
 Accept: application/json
 
 ### GET PokemonStats By PokemonID
-@pokemonId = 1
+@pokemonId = 27
 GET http://localhost:3030/pokemon-stats/pokemon/{{pokemonId}}
 Accept: application/json

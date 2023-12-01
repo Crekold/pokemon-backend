@@ -7,6 +7,7 @@ public class PokemonApiDto {
     private String name;
     private Sprites sprites;
     private List<TypeElementDto> types;
+    private List<StatDto> stats;
 
     // Getters y setters para id, name y sprites
     public int getId() {
@@ -41,6 +42,15 @@ public class PokemonApiDto {
         this.types = types;
     }
 
+    // Getters y setters para stats
+    public List<StatDto> getStats() {
+        return stats;
+    }
+
+    public void setStats(List<StatDto> stats) {
+        this.stats = stats;
+    }
+
     // Static nested class Sprites
     public static class Sprites {
         private String front_default;
@@ -73,6 +83,42 @@ public class PokemonApiDto {
             private String name;
 
             // Getters y setters para name
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
+    }
+
+    // Static nested class para los stats
+    public static class StatDto {
+        private StatDetailDto stat;
+        private int base_stat;
+
+        // Getters y setters
+        public StatDetailDto getStat() {
+            return stat;
+        }
+
+        public void setStat(StatDetailDto stat) {
+            this.stat = stat;
+        }
+
+        public int getBase_stat() {
+            return base_stat;
+        }
+
+        public void setBase_stat(int base_stat) {
+            this.base_stat = base_stat;
+        }
+
+        public static class StatDetailDto {
+            private String name;
+
+            // Getters y setters
             public String getName() {
                 return name;
             }

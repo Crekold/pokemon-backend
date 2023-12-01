@@ -2,9 +2,11 @@ package com.backend.pokemon.service;
 
 import com.backend.pokemon.dto.PokemonApiDto;
 import com.backend.pokemon.model.Pokemon;
+import com.backend.pokemon.model.PokemonStats;
 import com.backend.pokemon.model.TypeElement;
 import com.backend.pokemon.model.PokemonType;
 import com.backend.pokemon.repository.PokemonRepository;
+import com.backend.pokemon.repository.PokemonStatsRepository;
 import com.backend.pokemon.repository.TypeElementRepository;
 import com.backend.pokemon.repository.PokemonTypeRepository;
 import org.slf4j.Logger;
@@ -26,16 +28,19 @@ public class PokemonApiService {
     private final PokemonRepository pokemonRepository;
     private final TypeElementRepository typeElementRepository;
     private final PokemonTypeRepository pokemonTypeRepository;
+    private final PokemonStatsRepository pokemonStatsRepository;
 
     @Autowired
     public PokemonApiService(RestTemplate restTemplate,
                              PokemonRepository pokemonRepository,
                              TypeElementRepository typeElementRepository,
-                             PokemonTypeRepository pokemonTypeRepository) {
+                             PokemonTypeRepository pokemonTypeRepository,
+                             PokemonStatsRepository pokemonStatsRepository) {
         this.restTemplate = restTemplate;
         this.pokemonRepository = pokemonRepository;
         this.typeElementRepository = typeElementRepository;
         this.pokemonTypeRepository = pokemonTypeRepository;
+        this.pokemonStatsRepository = pokemonStatsRepository;
     }
 
     @Transactional
@@ -50,26 +55,30 @@ public class PokemonApiService {
                 throw new RuntimeException("No se pudo obtener datos del Pokémon desde la PokéAPI para el ID: " + pokemonId);
             }
 
-            Pokemon pokemon = new Pokemon();
-            pokemon.setPokemonId(String.valueOf(pokemonApiDto.getId()));
-            pokemon.setPokemonName(pokemonApiDto.getName());
-            pokemon.setImageUrl(pokemonApiDto.getSprites().getFront_default());
-            pokemon = pokemonRepository.save(pokemon); 
+            Pokemon pokemon = new Pokemon(String.valueOf(pokemonApiDto.getId()), pokemonApiDto.getName(), pokemonApiDto.getSprites().getFront_default());
+            pokemonRepository.save(pokemon); 
 
             for (PokemonApiDto.TypeElementDto typeDto : pokemonApiDto.getTypes()) {
-                TypeElement typeElement = typeElementRepository
-                    .findByTypeElementName(typeDto.getType().getName())
-                    .orElseGet(() -> {
-                        TypeElement newTypeElement = new TypeElement();
-                        newTypeElement.setTypeElementName(typeDto.getType().getName());
-                        return typeElementRepository.save(newTypeElement);
-                    });
-
-                PokemonType pokemonType = new PokemonType();
-                pokemonType.setPokemon(pokemon);
-                pokemonType.setTypeElement(typeElement);
-                pokemonTypeRepository.save(pokemonType);
+                TypeElement typeElement = typeElementRepository.findByTypeElementName(typeDto.getType().getName())
+                        .orElseGet(() -> typeElementRepository.save(new TypeElement(typeDto.getType().getName())));
+                pokemonTypeRepository.save(new PokemonType(pokemon, typeElement));
             }
+
+            // Ahora manejar los stats
+            PokemonStats stats = new PokemonStats();
+            pokemonApiDto.getStats().forEach(statDto -> {
+                switch (statDto.getStat().getName()) {
+                    case "hp": stats.setHp(statDto.getBase_stat()); break;
+                    case "attack": stats.setAttack(statDto.getBase_stat()); break;
+                    case "defense": stats.setDefense(statDto.getBase_stat()); break;
+                    case "special-attack": stats.setSpecialAttack(statDto.getBase_stat()); break;
+                    case "special-defense": stats.setSpecialDefense(statDto.getBase_stat()); break;
+                    // Añadir más casos según sea necesario
+                }
+            });
+            stats.setPokemon(pokemon);
+            pokemonStatsRepository.save(stats);
+
             return pokemon;
         } catch (Exception e) {
             LOG.error("Error al importar Pokémon desde la PokéAPI: ", e);
