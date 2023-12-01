@@ -209,15 +209,14 @@ public class TeamService {
             Team team = teamRepository.findById(request.getTeamId())
                     .orElseThrow(() -> new RuntimeException("Equipo no encontrado con ID: " + request.getTeamId()));
 
-            // Opcional: Actualiza el nombre del equipo si se proporciona uno nuevo
             if (request.getTeamName() != null && !request.getTeamName().isEmpty()) {
                 team.setTeamName(request.getTeamName());
             }
 
-            // Borra los antiguos TeamPokemon asociados con este equipo
             teamPokemonRepository.deleteByTeamTeamId(team.getTeamId());
 
-            // Crea y guarda las nuevas asociaciones TeamPokemon
+            int totalHp = 0, totalAttack = 0, totalDefense = 0, totalSpecialAttack = 0, totalSpecialDefense = 0;
+
             for (String pokemonId : request.getPokemonIds()) {
                 Pokemon pokemon = pokemonRepository.findById(pokemonId)
                         .orElseThrow(() -> new RuntimeException("Pokemon no encontrado con ID: " + pokemonId));
@@ -225,9 +224,29 @@ public class TeamService {
                 teamPokemon.setPokemon(pokemon);
                 teamPokemon.setTeam(team);
                 teamPokemonRepository.save(teamPokemon);
+
+                List<PokemonStats> pokemonStatsList = pokemonStatsRepository.findByPokemon_PokemonId(pokemonId);
+                for (PokemonStats stats : pokemonStatsList) {
+                    totalHp += stats.getHp();
+                    totalAttack += stats.getAttack();
+                    totalDefense += stats.getDefense();
+                    totalSpecialAttack += stats.getSpecialAttack();
+                    totalSpecialDefense += stats.getSpecialDefense();
+                }
             }
 
-            // Guarda los cambios en el equipo
+            // Cálculo de estadísticas promedio y actualización en team_stats
+            int pokemonCount = request.getPokemonIds().size();
+            TeamStats existingTeamStats = teamStatsRepository.findByTeam_TeamId(team.getTeamId());
+            if (existingTeamStats != null) {
+                existingTeamStats.setHpProm(totalHp / pokemonCount);
+                existingTeamStats.setAttackProm(totalAttack / pokemonCount);
+                existingTeamStats.setDefenseProm(totalDefense / pokemonCount);
+                existingTeamStats.setSaProm(totalSpecialAttack / pokemonCount);
+                existingTeamStats.setSeProm(totalSpecialDefense / pokemonCount);
+                teamStatsRepository.save(existingTeamStats);
+            }
+
             teamRepository.save(team);
             LOG.info("Equipo actualizado con éxito con nombre: {}", team.getTeamName());
             return convertEntityToDTO(team);
