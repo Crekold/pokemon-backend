@@ -1,0 +1,44 @@
+@hostname = localhost
+@port = 3030
+@host = {{hostname}}:{{port}}
+
+### GET ALL TeamSuggestions
+GET http://{{host}}/team-suggestions
+Accept: application/json
+
+### GET TeamSuggestion by ID
+GET http://{{host}}/team-suggestions/1
+Accept: application/json
+
+### POST New TeamSuggestion
+POST http://{{host}}/team-suggestions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "suggestionExplanation": "Excelente equipo",
+  "team": {
+    "teamId": 1
+  }
+}
+
+### PUT Update TeamSuggestion
+PUT http://{{host}}/team-suggestions/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "suggestionExplanation": "Equipo actualizado",
+  "team": {
+    "teamId": 2
+  }
+}
+
+### DELETE TeamSuggestion
+DELETE http://{{host}}/team-suggestions/3
+Accept: application/json
+
+### GET TeamSuggestion by TeamID
+@teamId = 2
+GET http://{{host}}/team-suggestions/team/{{teamId}}
+Accept: application/json

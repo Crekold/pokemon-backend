@@ -53,6 +53,24 @@ CREATE TABLE team_pokemon (
   team_team_id integer REFERENCES team(team_id)
 );
 
+-- Creación de tabla team_stats 
+CREATE TABLE team_stats (
+  team_stats_id serial PRIMARY KEY,
+  hp_prom int NOT NULL,
+  attack_prom int NOT NULL,
+  defense_prom int NOT NULL,
+  SA_prom int NOT NULL,
+  SE_prom int NOT NULL,
+  team_team_id integer REFERENCES team(team_id)
+);
+
+-- Creación de tabla suggestion 
+CREATE TABLE team_suggestion (
+  team_suggestion_id serial PRIMARY KEY,
+  suggestion_explanation text NOT NULL, 
+  team_team_id integer REFERENCES team(team_id) 
+);
+
 -- Insertar datos de ejemplo en la tabla user
 INSERT INTO user (user_id, nickname) VALUES
 ('user1', 'AshK'),

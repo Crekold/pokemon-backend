@@ -1,0 +1,54 @@
+@hostname = localhost
+@port = 3030
+@host = {{hostname}}:{{port}}
+
+### GET ALL TeamStats
+GET http://{{host}}/team-stats
+Accept: application/json
+
+### GET TeamStats by ID
+GET http://{{host}}/team-stats/1
+Accept: application/json
+
+### POST New TeamStats
+POST http://{{host}}/team-stats
+Content-Type: application/json
+Accept: application/json
+
+{
+  "hpProm": 80,
+  "attackProm": 70,
+  "defenseProm": 60,
+  "saProm": 65,
+  "seProm": 75,
+  "team": {
+    "teamId": 1
+  }
+}
+
+
+### PUT Update TeamStats
+PUT http://{{host}}/team-stats/3
+Content-Type: application/json
+Accept: application/json
+
+{
+  "hpProm": 8,
+  "attackProm": 7,
+  "defenseProm": 6,
+  "saProm": 6,
+  "seProm": 7,
+  "team": {
+    "teamId": 2
+  }
+}
+
+### DELETE TeamStats
+DELETE http://{{host}}/team-stats/3
+Accept: application/json
+
+
+### GET TeamStats by TeamID
+@teamId = 2
+GET http://{{host}}/team-stats/team/{{teamId}}
+Accept: application/json

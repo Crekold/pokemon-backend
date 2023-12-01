@@ -45,6 +45,6 @@ Accept: application/json
 
 
 ### GET TeamPokemonBy TeamID
-@teamId = 9
+@teamId = 6
 GET http://{{host}}/team-pokemon/team/{{teamId}}
 Accept: application/json

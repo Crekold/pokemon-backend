@@ -1,4 +1,4 @@
-@hostname = localhost
+  @hostname = localhost
 @port = 3030
 @host = {{hostname}}:{{port}}
 

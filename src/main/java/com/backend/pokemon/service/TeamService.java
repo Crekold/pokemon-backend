@@ -4,12 +4,16 @@ import com.backend.pokemon.dto.CreateTeamRequestDTO;
 import com.backend.pokemon.dto.TeamDTO;
 import com.backend.pokemon.dto.UserDTO;
 import com.backend.pokemon.model.Pokemon;
+import com.backend.pokemon.model.PokemonStats;
 import com.backend.pokemon.model.Team;
 import com.backend.pokemon.model.TeamPokemon;
+import com.backend.pokemon.model.TeamStats;
 import com.backend.pokemon.model.User;
 import com.backend.pokemon.repository.PokemonRepository;
+import com.backend.pokemon.repository.PokemonStatsRepository;
 import com.backend.pokemon.repository.TeamPokemonRepository;
 import com.backend.pokemon.repository.TeamRepository;
+import com.backend.pokemon.repository.TeamStatsRepository;
 import com.backend.pokemon.repository.UserRepository;
 
 import org.slf4j.Logger;
@@ -30,18 +34,25 @@ public class TeamService {
     private final UserRepository userRepository;
     private final PokemonRepository pokemonRepository;
     private final TeamPokemonRepository teamPokemonRepository;
+    private final PokemonStatsRepository pokemonStatsRepository;
+    private final TeamStatsRepository teamStatsRepository;
 
 
     @Autowired
     public TeamService(TeamRepository teamRepository,
                        UserRepository userRepository,
                        PokemonRepository pokemonRepository,
-                       TeamPokemonRepository teamPokemonRepository) {
+                       TeamPokemonRepository teamPokemonRepository,
+                       PokemonStatsRepository pokemonStatsRepository,
+                       TeamStatsRepository teamStatsRepository) {
         this.teamRepository = teamRepository;
         this.userRepository = userRepository;
         this.pokemonRepository = pokemonRepository;
         this.teamPokemonRepository = teamPokemonRepository;
+        this.pokemonStatsRepository = pokemonStatsRepository;
+        this.teamStatsRepository = teamStatsRepository;
     }
+
 
     @Transactional
     public TeamDTO saveTeam(TeamDTO teamDTO) {
@@ -150,6 +161,8 @@ public class TeamService {
             team.setUser(user);
             team = teamRepository.save(team);
 
+            int totalHp = 0, totalAttack = 0, totalDefense = 0, totalSpecialAttack = 0, totalSpecialDefense = 0;
+
             for (String pokemonId : request.getPokemonIds()) {
                 Pokemon pokemon = pokemonRepository.findById(pokemonId)
                         .orElseThrow(() -> new RuntimeException("Pokemon no encontrado con ID: " + pokemonId));
@@ -157,9 +170,30 @@ public class TeamService {
                 teamPokemon.setPokemon(pokemon);
                 teamPokemon.setTeam(team);
                 teamPokemonRepository.save(teamPokemon);
+
+                List<PokemonStats> pokemonStatsList = pokemonStatsRepository.findByPokemon_PokemonId(pokemonId);
+                for (PokemonStats stats : pokemonStatsList) {
+                    totalHp += stats.getHp();
+                    totalAttack += stats.getAttack();
+                    totalDefense += stats.getDefense();
+                    totalSpecialAttack += stats.getSpecialAttack();
+                    totalSpecialDefense += stats.getSpecialDefense();
+                }
             }
 
-            LOG.info("Equipo {} creado con éxito.", team.getTeamName());
+            // Cálculo de estadísticas promedio y almacenamiento en team_stats
+            int pokemonCount = request.getPokemonIds().size();
+            TeamStats teamStats = new TeamStats(
+                totalHp / pokemonCount,
+                totalAttack / pokemonCount,
+                totalDefense / pokemonCount,
+                totalSpecialAttack / pokemonCount,
+                totalSpecialDefense / pokemonCount,
+                team
+            );
+            teamStatsRepository.save(teamStats);
+
+            LOG.info("Equipo creado con éxito con nombre: {} y estadísticas promedio.", team.getTeamName());
             return team;
         } catch (Exception e) {
             LOG.error("Error al crear el equipo: {}", e.getMessage(), e);

@@ -45,6 +45,6 @@ Accept: application/json
 
 ### Importar Rango de Pokemons de la PokeApi
 @startId = 1
-@endId = 151
+@endId = 30
 GET http://{{host}}/pokemons/import-range?startId={{startId}}&endId={{endId}}
 Accept: application/json
